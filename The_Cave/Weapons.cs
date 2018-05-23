@@ -4,7 +4,13 @@ namespace The_Cave
 {
     class Weapons
     {
-        protected int atkPoints, defPoints = 0;
+        protected int atkPoints, wepDefPoints = 0;
+
+        public char Equip()
+        {
+            Console.WriteLine("This armour has been equipped!");
+            return 'e';
+        }
 
         public int Attack(int opDef)
         {
@@ -25,14 +31,14 @@ namespace The_Cave
             }
         }
 
-        public int Defend(int opAtk, int armourDef)
+        public int Defend(int opAtk, int armourDefPoints)
         {
-            if ((defPoints + armourDef) < opAtk)
+            if ((wepDefPoints + armourDefPoints) < opAtk)
             {
                 Console.WriteLine("Your defense was broken, you have been hurt!");
-                return opAtk - defPoints;
+                return opAtk - wepDefPoints;
             }
-            else if ((defPoints + armourDef) > opAtk)
+            else if ((wepDefPoints + armourDefPoints) > opAtk)
             {
                 Console.WriteLine("You have successfully defended!");
                 return 0;
@@ -52,7 +58,7 @@ namespace The_Cave
 
         public int GetDef()
         {
-            return this.defPoints;
+            return this.wepDefPoints;
         }
     }
 
@@ -60,8 +66,8 @@ namespace The_Cave
     {
         public Dagger()
         {
-            atkPoints = 3;
-            defPoints = 3;
+            atkPoints = 2;
+            wepDefPoints = 2;
         }
     }
 
@@ -70,7 +76,7 @@ namespace The_Cave
         public CrossBow()
         {
             atkPoints = 6;
-            defPoints = 1;
+            wepDefPoints = 1;
         }
     }
 
@@ -79,7 +85,7 @@ namespace The_Cave
         public Mace()
         {
             atkPoints = 6;
-            defPoints = 4;
+            wepDefPoints = 4;
         }
     }
 
@@ -88,7 +94,7 @@ namespace The_Cave
         public MorningStar()
         {
             atkPoints = 8;
-            defPoints = 2;
+            wepDefPoints = 2;
         }
     }
 
@@ -97,7 +103,7 @@ namespace The_Cave
         public Longsword()
         {
             atkPoints = 6;
-            defPoints = 3;
+            wepDefPoints = 3;
         }
     }
 
@@ -106,7 +112,7 @@ namespace The_Cave
         public BattleAxe()
         {
             atkPoints = 5;
-            defPoints = 4;
+            wepDefPoints = 4;
         }
     }
 }
