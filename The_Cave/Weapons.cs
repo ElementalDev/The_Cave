@@ -1,80 +1,81 @@
 ﻿using System;
 
-namespace The_Cave
+//Initial class for all weapons: Contains all methods of which the weapons will use.
+class Weapons
 {
-    class Weapons
-    {
-        protected int atkPoints, wepDefPoints = 0;
+    //Variables that will be used by all inherited classes.
+    protected int atkPoints, wepDefPoints = 0;
 
-        public char Equip()
-        {
+    //Equips the weapon to the player
+    public char Equip()
+    {
             Console.WriteLine("This armour has been equipped!");
             return 'e';
-        }
-
-        public int GetAtk()
-        {
-            return this.atkPoints;
-
-        }
-
-        public int GetDef()
-        {
-            return this.wepDefPoints;
-        }
     }
 
-    class Dagger : Weapons
-    {
-        public Dagger()
-        {
-            atkPoints = 2;
-            wepDefPoints = 2;
-        }
-    }
+    //Gets the attack of the weapon
+    public int GetAtk() { return this.atkPoints; }
 
-    class CrossBow : Weapons
-    {
-        public CrossBow()
-        {
-            atkPoints = 6;
-            wepDefPoints = 1;
-        }
-    }
+    //Gets the defence of the weapon
+    public int GetDef() { return this.wepDefPoints; }
+}
 
-    class Mace : Weapons
+//Contains dagger stats. Inherits from Weapons.
+class Dagger : Weapons
+{
+    public Dagger()
     {
-        public Mace()
-        {
-            atkPoints = 6;
-            wepDefPoints = 4;
-        }
+        atkPoints = 2;
+        wepDefPoints = 2;
     }
+}
 
-    class MorningStar : Weapons
+//Contains crossbow stats. Inherits from Weapons.
+class CrossBow : Weapons
+{
+    public CrossBow()
     {
-        public MorningStar()
-        {
-            atkPoints = 8;
-            wepDefPoints = 2;
-        }
+        atkPoints = 6;
+        wepDefPoints = 1;
     }
+}
 
-    class Longsword : Weapons
+//Contains mace stats. Inherits from Weapons.
+class Mace : Weapons
+{
+    public Mace()
     {
-        public Longsword()
-        {
-            atkPoints = 6;
-            wepDefPoints = 3;
-        }
+        atkPoints = 6;
+        wepDefPoints = 4;
     }
+}
 
-    class BattleAxe : Weapons
+//Contains morning star stats. Inherits from Weapons.
+class MorningStar : Weapons
+{
+    public MorningStar()
     {
-        public BattleAxe()
-        {
-            atkPoints = 5;
-            wepDefPoints = 4;
-        }
+        atkPoints = 8;
+        wepDefPoints = 2;
+    }
+}
+
+//Contains longsword. Inherits from Weapons.
+class Longsword : Weapons
+{
+    public Longsword()
+    {
+        atkPoints = 6;
+        wepDefPoints = 3;
+    }
+}
+
+//Contains battle axe stats. Inherits from Weapons.
+class BattleAxe : Weapons
+{
+    public BattleAxe()
+    {
+        atkPoints = 5;
+        wepDefPoints = 4;
     }
 }

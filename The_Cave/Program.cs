@@ -4,7 +4,7 @@ namespace The_Cave
 {
     class Program
     {   
-        //Main code is run in here
+        //Main code is run in here.
         static void Main(string[] args)
         {
             do
@@ -20,7 +20,7 @@ namespace The_Cave
 
         }
 
-        //Print intro
+        //Print intro.
         public static void PrintIntro()
         {
             //Have some ASCII art
@@ -35,7 +35,7 @@ namespace The_Cave
             Console.WriteLine("----------------------");
 
             //Tell user what the game is
-            //Explain rules and mechanics to user
+                //Explain rules and mechanics to user
 
             Console.WriteLine();
             Console.WriteLine("------------------------------------------------------------------------------");
@@ -51,18 +51,24 @@ namespace The_Cave
             Console.ReadLine();
         }
 
-        //Ask the user what profession they want to use
+        //Ask the user what profession they want to use.
         public static Professions GetProfession()
         {
             Console.Clear();
+
+            //Create all objects to use Gets
 
             Professions chosenProf = new Professions();
             Warrior war = new Warrior();
             Mage mage = new Mage();
             Hunter hun = new Hunter();
 
+            //Input and validation variables
+
             string input = "";
             bool isValid = false;
+
+            //Profession menu
 
             Console.WriteLine("------------------------------------------");
             Console.WriteLine("| Which profession would you like to be? |");
@@ -75,6 +81,8 @@ namespace The_Cave
             input = Console.ReadLine();
 
             input = input.ToLower();
+
+            //Returns profession based on user input
 
             do
             {
@@ -103,7 +111,7 @@ namespace The_Cave
             return chosenProf;
         }
 
-        //Asks user the difficulty level they wish to play
+        //Asks user the difficulty level they wish to play.
         public static char GetDifficulty()
         {
             Console.Clear();
@@ -115,10 +123,11 @@ namespace The_Cave
 
             diff = diff.ToLower();
 
+            //Return the first character of the user input
             return diff[0];
         }
 
-        //Code that runs through the game
+        //Code that runs through the game.
         public static void PlayGame()
         {
             string input = "";
@@ -192,7 +201,7 @@ namespace The_Cave
 
         }
 
-        //Prints summary of the game
+        //Prints summary of the game.
         public static void PrintSummary(string ending)
         {
             //Base summary on choices within the game
@@ -203,7 +212,7 @@ namespace The_Cave
 
         }
 
-        //Asks the user to play again
+        //Asks the user to play again.
         public static bool AskToPlayAgain()
         {
             string opt = "";
@@ -211,7 +220,7 @@ namespace The_Cave
             Console.WriteLine("Play again if you dare! (Y/N)");
             opt = Console.ReadLine();
 
-
+            //Returns a boolean that tells the program if the user wants to play again or not
             return (opt == "y" || opt == "Y");
         }
     }

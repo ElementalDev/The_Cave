@@ -1,55 +1,54 @@
 ﻿using System;
 
-namespace The_Cave
+//Initial class for all armours: Contains all methods of which the armours will use.
+class Armours
 {
-    class Armours
+    //Variables that will be used by all inherited classes.
+    protected int armourDefPoints = 0;
+
+    //Equips the armour to the player
+    public char Equip()
     {
-        protected int armourDefPoints = 0;
-
-        public char Equip()
-        {
-            Console.WriteLine("This armour has been equipped!");
-            return 'e';
-        }
-
-        public int GetDef()
-        {
-            return this.armourDefPoints;
-        }
-
+        Console.WriteLine("This armour has been equipped!");
+        return 'e';
     }
 
-    class Leather : Armours
+    //Gets the defence of the armour
+    public int GetDef() { return this.armourDefPoints; }
+}
+
+//Contains wool armour stats. Inherits from Armours.
+class Wool : Armours
+{
+    public Wool()
     {
-        public Leather()
-        {
-            armourDefPoints = 3;
-        }
+        armourDefPoints = 1;
     }
+}
 
-    class Steel : Armours
+//Contains leather armour stats. Inherits from Armours.
+class Leather : Armours
+{
+    public Leather()
     {
-        public Steel()
-        { 
-            armourDefPoints = 5;
-        }
+        armourDefPoints = 3;
     }
+}
 
-
-    class Wool : Armours
-    {
-        public Wool()
-        {
-            armourDefPoints = 1;
-        }
+//Contains steel armour stats. Inherits from Armours.
+class Steel : Armours
+{
+    public Steel()
+    { 
+        armourDefPoints = 5;
     }
+}
 
-
-    class Chainmail : Armours
+//Contains chainmail armour stats. Inherits from Armours.
+class Chainmail : Armours
+{
+    public Chainmail()
     {
-        public Chainmail()
-        {
-            armourDefPoints = 8;
-        }
+        armourDefPoints = 8;
     }
 }
