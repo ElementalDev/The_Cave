@@ -12,44 +12,6 @@ namespace The_Cave
             return 'e';
         }
 
-        public int Attack(int opDef)
-        {
-            if (atkPoints < opDef)
-            {
-                Console.WriteLine("your weapon is not strong enough! No damage done.");
-                return 0;
-            }
-            else if (atkPoints > opDef)
-            {
-                Console.WriteLine("You have wounded your enemy!");
-                return atkPoints - opDef;
-            }
-            else
-            {
-                Console.WriteLine("You are both as strong as eachother.");
-                return 0;
-            }
-        }
-
-        public int Defend(int opAtk, int armourDefPoints)
-        {
-            if ((wepDefPoints + armourDefPoints) < opAtk)
-            {
-                Console.WriteLine("Your defense was broken, you have been hurt!");
-                return opAtk - wepDefPoints;
-            }
-            else if ((wepDefPoints + armourDefPoints) > opAtk)
-            {
-                Console.WriteLine("You have successfully defended!");
-                return 0;
-            }
-            else
-            {
-                Console.WriteLine("You are both as strong as eachother.");
-                return 0;
-            }
-        }
-
         public int GetAtk()
         {
             return this.atkPoints;

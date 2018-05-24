@@ -37,7 +37,7 @@ namespace The_Cave
             Console.WriteLine();
             Console.WriteLine("------------------------------------------------------------------------------");
             Console.WriteLine("| -This is a game of adventure!                                              |");
-            Console.WriteLine("| - Choose your profession! Each one gives you different abilities and stats |");
+            Console.WriteLine("| -Choose your profession! Each one gives you different abilities and stats  |");
             Console.WriteLine("| -Find your way out of the cave.                                            |");
             Console.WriteLine("| -Use items to help you defeat the enemies that stand in your way           |");
             Console.WriteLine("| -Find treasures that you can take back to the surface!                     |");
@@ -45,11 +45,62 @@ namespace The_Cave
             Console.WriteLine("------------------------------------------------------------------------------");
         }
 
+        public static char GetDifficulty()
+        {
+            string diff = "";
+
+            Console.WriteLine("What difficulty would you like to play? (Easy, Medium, Hard)");
+            diff = Console.ReadLine();
+
+            diff = diff.ToLower();
+
+            return diff[0];
+        }
+
+
         public static void PlayGame()
         {
-            //Run through game
+            TheCave game = new TheCave();
 
             //Generate Map (Possibly 2d array)
+
+            object[,] GameMap = game.MapCreate(GetDifficulty());
+
+            Random rand = new Random();
+
+            if (GetDifficulty() == 'e')
+            {
+                int num1 = rand.Next(1, 11), num2 = rand.Next(1, 11), numOfObjects = 2;
+
+                Enemies enem = new Enemies();
+                Armours arm = new Armours();
+                Weapons wep = new Weapons();
+
+
+            for (int i = 0; i < numOfObjects; i++)
+            {
+                GameMap[num1, num2] = enem;
+                GameMap[num1, num2] = arm;
+                GameMap[num1, num2] = wep;
+            }
+
+               int rowNums = GameMap.GetLength(0);
+               int colNums = GameMap.GetLength(1);
+
+
+            for (int i = 0; i < GameMap.GetLength(0); i++)
+            {
+                for (int j = 0; j < GameMap.GetLength(0); j++)
+                {
+                        Console.WriteLine(GameMap[i, j]);
+                }
+                    Console.WriteLine();
+            }
+        }
+
+            //Run through game
+
+            
 
             //Assign objects where necessary
 
