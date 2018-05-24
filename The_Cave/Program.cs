@@ -3,12 +3,16 @@
 namespace The_Cave
 {
     class Program
-    {
+    {   
+        //Main code is run in here
         static void Main(string[] args)
         {
             do
             {
+                Console.Clear();
                 PrintIntro();
+                GetProfession();
+                GetDifficulty();
                 PlayGame();
                 PrintSummary("Ending1");
 
@@ -16,10 +20,9 @@ namespace The_Cave
 
         }
 
+        //Print intro
         public static void PrintIntro()
         {
-            //Print intro
-
             //Have some ASCII art
             Console.WriteLine("       THE CAVE");
             Console.WriteLine();
@@ -42,11 +45,69 @@ namespace The_Cave
             Console.WriteLine("| -Use items to help you defeat the enemies that stand in your way           |");
             Console.WriteLine("| -Find treasures that you can take back to the surface!                     |");
             Console.WriteLine("| -Use words to navigate. Type help for the keywords!                        |");
+            Console.WriteLine("|                                                                            |");
+            Console.WriteLine("|                           Press enter to begin!                            |");
             Console.WriteLine("------------------------------------------------------------------------------");
+            Console.ReadLine();
         }
 
+        //Ask the user what profession they want to use
+        public static Professions GetProfession()
+        {
+            Console.Clear();
+
+            Professions chosenProf = new Professions();
+            Warrior war = new Warrior();
+            Mage mage = new Mage();
+            Hunter hun = new Hunter();
+
+            string input = "";
+            bool isValid = false;
+
+            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("| Which profession would you like to be? |");
+            Console.WriteLine("|          (Type your selection)         |");
+            Console.WriteLine("|                                        |");
+            Console.WriteLine("| - Warrior - HP= {0}, MP= {1}              |", war.GetHealth(), war.GetMag());
+            Console.WriteLine("| - Mage - HP= {0}, MP= {1}                |", mage.GetHealth(), mage.GetMag());
+            Console.WriteLine("| - Hunter - HP= {0}, MP= {1}              |", hun.GetHealth(), hun.GetMag());
+            Console.WriteLine("------------------------------------------");
+            input = Console.ReadLine();
+
+            input = input.ToLower();
+
+            do
+            {
+                if (input[0] == 'w')
+                {
+                    chosenProf = new Warrior();
+                    isValid = true;
+                }
+                else if (input[0] == 'm')
+                {
+                    chosenProf = new Mage();
+                    isValid = true;
+                }
+                else if (input[0] == 'h')
+                {
+                    chosenProf = new Hunter();
+                    isValid = true;
+                }
+                else
+                {
+                    Console.WriteLine("This input is invalid, please try again!");
+                    isValid = false;
+                }
+            } while (!isValid);
+
+            return chosenProf;
+        }
+
+        //Asks user the difficulty level they wish to play
         public static char GetDifficulty()
         {
+            Console.Clear();
+            
             string diff = "";
 
             Console.WriteLine("What difficulty would you like to play? (Easy, Medium, Hard)");
@@ -57,50 +118,49 @@ namespace The_Cave
             return diff[0];
         }
 
-
+        //Code that runs through the game
         public static void PlayGame()
         {
+            string input = "";
+            char direction = 'a';
+
             TheCave game = new TheCave();
 
-            //Generate Map (Possibly 2d array)
-
-            object[,] GameMap = game.MapCreate(GetDifficulty());
-
-            Random rand = new Random();
-
-            if (GetDifficulty() == 'e')
-            {
-                int num1 = rand.Next(1, 11), num2 = rand.Next(1, 11), numOfObjects = 2;
-
-                Enemies enem = new Enemies();
-                Armours arm = new Armours();
-                Weapons wep = new Weapons();
-
-
-            for (int i = 0; i < numOfObjects; i++)
-            {
-                GameMap[num1, num2] = enem;
-                GameMap[num1, num2] = arm;
-                GameMap[num1, num2] = wep;
-            }
-
-               int rowNums = GameMap.GetLength(0);
-               int colNums = GameMap.GetLength(1);
-
-
-            for (int i = 0; i < GameMap.GetLength(0); i++)
-            {
-                for (int j = 0; j < GameMap.GetLength(0); j++)
-                {
-                        Console.WriteLine(GameMap[i, j]);
-                }
-                    Console.WriteLine();
-            }
-        }
+            game.Reset();
 
             //Run through game
 
-            
+            Console.Clear();
+
+            Console.WriteLine("Where would you like to go? (f, b, l, r)");
+            input = Console.ReadLine();
+
+            input = input.ToLower();
+
+            direction = input[0];
+
+            switch (direction)
+            {
+                case 'f':
+                        Console.WriteLine("You have moved forward");
+                        break;
+                case 'b':
+                        Console.WriteLine("You have moved backward");
+                        break;
+                case 'l':
+                        Console.WriteLine("You have moved left");
+                        break;
+                case 'r':
+                        Console.WriteLine("You have moved right");
+                        break;
+                default:
+                        Console.WriteLine("This input is not valid. Please try again.");
+                        break;
+            }
+
+            //Generate Map
+
+            //Run through game
 
             //Assign objects where necessary
 
@@ -132,6 +192,7 @@ namespace The_Cave
 
         }
 
+        //Prints summary of the game
         public static void PrintSummary(string ending)
         {
             //Base summary on choices within the game
@@ -142,6 +203,7 @@ namespace The_Cave
 
         }
 
+        //Asks the user to play again
         public static bool AskToPlayAgain()
         {
             string opt = "";
