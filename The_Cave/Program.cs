@@ -1,9 +1,10 @@
 ﻿using System;
+using System.ComponentModel;
 
 namespace The_Cave
 {
     class Program
-    {   
+    {
         //Main code is run in here.
         static void Main(string[] args)
         {
@@ -11,8 +12,6 @@ namespace The_Cave
             {
                 Console.Clear();
                 PrintIntro();
-                GetProfession();
-                GetDifficulty();
                 PlayGame();
                 PrintSummary("Ending1");
 
@@ -35,7 +34,7 @@ namespace The_Cave
             Console.WriteLine("----------------------");
 
             //Tell user what the game is
-                //Explain rules and mechanics to user
+            //Explain rules and mechanics to user
 
             Console.WriteLine();
             Console.WriteLine("------------------------------------------------------------------------------");
@@ -115,7 +114,7 @@ namespace The_Cave
         public static char GetDifficulty()
         {
             Console.Clear();
-            
+
             string diff = "";
 
             Console.WriteLine("What difficulty would you like to play? (Easy, Medium, Hard)");
@@ -130,46 +129,93 @@ namespace The_Cave
         //Code that runs through the game.
         public static void PlayGame()
         {
-            string input = "";
-            char direction = 'a';
-
+            Random rand = new Random();
+            IChangeTracking cng;
             TheCave game = new TheCave();
 
-            game.Reset();
+            GetProfession();
 
-            //Run through game
+            int maxTurns = game.GetTurns(GetDifficulty());
 
             Console.Clear();
 
-            Console.WriteLine("Where would you like to go? (f, b, l, r)");
-            input = Console.ReadLine();
+            Console.WriteLine("You have {0} turns to escape! The cave might be merciful...then again...maybe not.", maxTurns);
+            Console.WriteLine("Press enter to continue. Good Luck!");
+            Console.ReadLine();
 
-            input = input.ToLower();
-
-            direction = input[0];
-
-            switch (direction)
-            {
-                case 'f':
-                        Console.WriteLine("You have moved forward");
-                        break;
-                case 'b':
-                        Console.WriteLine("You have moved backward");
-                        break;
-                case 'l':
-                        Console.WriteLine("You have moved left");
-                        break;
-                case 'r':
-                        Console.WriteLine("You have moved right");
-                        break;
-                default:
-                        Console.WriteLine("This input is not valid. Please try again.");
-                        break;
-            }
-
-            //Generate Map
+            Console.Clear();
 
             //Run through game
+
+            int fwd = 0;
+            int right = 0;
+
+            for (int i = 0; i <= 5; i++)
+            {
+                int randomNum = rand.Next();
+
+                bool isValid = false;
+
+                string input = "";
+
+                //Asks the user the direction they want to go in
+
+                Console.Write("Which direction would you like to go in? (f, b, l, r): ");
+                input = Console.ReadLine();
+
+                input = input.ToLower();
+
+                //Validates user input
+
+                do
+                {
+                    if (input[0] == 'f' || input[0] == 'b' || input[0] == 'l' || input[0] == 'r')
+                    {
+                        isValid = true;
+
+                    }
+                    else
+                    {
+                        Console.WriteLine("Input invalid. Please try again.");
+                        Console.WriteLine();
+                        isValid = false;
+                    }
+                } while (isValid == false);
+
+                switch (input[0])
+                {
+                    case 'f':
+                        Console.WriteLine("You moved forward!");
+                        fwd++;
+                        break;
+                    case 'b':
+                        if (fwd == 0)
+                        {
+                            Console.WriteLine("You cant move back");
+                        }
+                        else
+                        {
+                            Console.WriteLine("You moved backwards");
+                            fwd--;
+                        }
+                        break;
+                    case 'l':
+                        if (right == 0)
+                        {
+                            Console.WriteLine("You cant move left");
+                        }
+                        else
+                        {
+                            Console.WriteLine("You moved left");
+                            right++;
+                        }
+                        break;
+                    case 'r':
+                        Console.WriteLine("You moved right");
+                        right--;
+                        break;
+                }
+            }
 
             //Assign objects where necessary
 
