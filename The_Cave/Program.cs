@@ -51,63 +51,63 @@ namespace The_Cave
         }
 
         //Ask the user what profession they want to use.
-        public static Professions GetProfession()
+
+        public static object GetProfession()
         {
             Console.Clear();
 
-            //Create all objects to use Gets
+            //Objects for stats
 
-            Professions chosenProf = new Professions();
             Warrior war = new Warrior();
             Mage mage = new Mage();
             Hunter hun = new Hunter();
 
             //Input and validation variables
 
+            object chosenProf;
+
             string input = "";
             bool isValid = false;
 
-            //Profession menu
-
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine("| Which profession would you like to be? |");
-            Console.WriteLine("|          (Type your selection)         |");
-            Console.WriteLine("|                                        |");
-            Console.WriteLine("| - Warrior - HP= {0}, MP= {1}              |", war.GetHealth(), war.GetMag());
-            Console.WriteLine("| - Mage - HP= {0}, MP= {1}                |", mage.GetHealth(), mage.GetMag());
-            Console.WriteLine("| - Hunter - HP= {0}, MP= {1}              |", hun.GetHealth(), hun.GetMag());
-            Console.WriteLine("------------------------------------------");
-            input = Console.ReadLine();
-
-            input = input.ToLower();
-
-            //Returns profession based on user input
-
             do
             {
+                //Profession menu
+
+                Console.WriteLine("------------------------------------------");
+                Console.WriteLine("| Which profession would you like to be? |");
+                Console.WriteLine("|          (Type your selection)         |");
+                Console.WriteLine("|                                        |");
+                Console.WriteLine("| - Warrior - HP= {0}, MP= {1}              |", war.GetHealth(), war.GetMag());
+                Console.WriteLine("| - Mage - HP= {0}, MP= {1}                |", mage.GetHealth(), mage.GetMag());
+                Console.WriteLine("| - Hunter - HP= {0}, MP= {1}              |", hun.GetHealth(), hun.GetMag());
+                Console.WriteLine("------------------------------------------");
+                input = Console.ReadLine();
+
+                input = input.ToLower();
+
+                //Returns profession based on user input
+
                 if (input[0] == 'w')
                 {
                     chosenProf = new Warrior();
-                    isValid = true;
+                    return chosenProf;
                 }
                 else if (input[0] == 'm')
                 {
                     chosenProf = new Mage();
-                    isValid = true;
+                    return chosenProf;
                 }
                 else if (input[0] == 'h')
                 {
                     chosenProf = new Hunter();
-                    isValid = true;
+                    return chosenProf;
                 }
                 else
                 {
                     Console.WriteLine("This input is invalid, please try again!");
-                    isValid = false;
+                    return 0;
                 }
             } while (!isValid);
-
-            return chosenProf;
         }
 
         //Asks user the difficulty level they wish to play.
@@ -129,11 +129,16 @@ namespace The_Cave
         //Code that runs through the game.
         public static void PlayGame()
         {
-            Random rand = new Random();
-            IChangeTracking cng;
+            //Objects Declaration
+
+            Random rand = new Random(DateTime.Now.Millisecond);
             TheCave game = new TheCave();
 
-            GetProfession();
+            //Get User Profession
+
+            Type userProf = GetProfession();
+
+            //Get the max amount of turns based on difficulty
 
             int maxTurns = game.GetTurns(GetDifficulty());
 
@@ -145,34 +150,38 @@ namespace The_Cave
 
             Console.Clear();
 
-            //Run through game
+            //Variable declarations
 
+            // Can only hold a certain amount of items(Inventory)
+
+            object[] inventory = new object[10]; 
+
+            int randomNum = rand.Next(1, 100);
+            int genMonster = 0;
+            int genItem = 0;
             int fwd = 0;
             int right = 0;
 
-            for (int i = 0; i <= 5; i++)
+            bool isValid = false;
+
+            string input = "";
+
+            for (int i = 0; i <= maxTurns; i++)
             {
-                int randomNum = rand.Next();
-
-                bool isValid = false;
-
-                string input = "";
-
                 //Asks the user the direction they want to go in
-
-                Console.Write("Which direction would you like to go in? (f, b, l, r): ");
-                input = Console.ReadLine();
-
-                input = input.ToLower();
-
-                //Validates user input
 
                 do
                 {
+                    Console.Write("Which direction would you like to go in? (f, b, l, r): ");
+                    input = Console.ReadLine();
+
+                    input = input.ToLower();
+
+                    //Validates user input
+
                     if (input[0] == 'f' || input[0] == 'b' || input[0] == 'l' || input[0] == 'r')
                     {
                         isValid = true;
-
                     }
                     else
                     {
@@ -182,13 +191,19 @@ namespace The_Cave
                     }
                 } while (isValid == false);
 
+                //Allow the user to make decision as to where they go
+
                 switch (input[0])
                 {
                     case 'f':
+
                         Console.WriteLine("You moved forward!");
+                        Console.WriteLine(genMonster);
                         fwd++;
                         break;
+
                     case 'b':
+
                         if (fwd == 0)
                         {
                             Console.WriteLine("You cant move back");
@@ -199,7 +214,9 @@ namespace The_Cave
                             fwd--;
                         }
                         break;
+
                     case 'l':
+
                         if (right == 0)
                         {
                             Console.WriteLine("You cant move left");
@@ -210,27 +227,77 @@ namespace The_Cave
                             right++;
                         }
                         break;
+
                     case 'r':
+
                         Console.WriteLine("You moved right");
                         right--;
                         break;
                 }
+
+                object[] enemArr = new object[10];
+
+                Dragon drag = new Dragon();
+                Warrior war = new Warrior();
+                BattleAxe axe = new BattleAxe();
+                Steel stlArm = new Steel();
+
+                int enemAtk = drag.getAtk();
+                int enemDef = drag.getDef();
+                int enemHP = drag.getHP();
+                int userHP = userProf.;
+                int userAtk = axe.GetAtk();
+                int userDef = axe.GetDef() + stlArm.GetDef();
+
+                //Generate enemies
+
+                genMonster += randomNum;
+
+                if (genMonster >= 100)
+                {
+                    Console.WriteLine("You have to battle {0}", drag.getName());
+
+                    for (int j = 0; j < 999; i++)
+                    {
+                        string userInput = "";
+
+                        Console.WriteLine("What would you like to do? (Attack, Defend, Use Item, Run Away)");
+                        userInput = Console.ReadLine().ToLower();
+
+                        (int, int) battle = game.UserTurn(enemAtk, enemDef, enemHP, userAtk, userDef, userHP, userInput[0]);
+
+                        userHP = battle.Item1;
+                        enemHP = battle.Item2; 
+
+                        if (battle.Item1 == -1 && battle.Item2 == -1)
+                        {
+                            genMonster = 0;
+                            break;
+                        }
+
+                        if (drag.getHP() <= 0)
+                        {
+                            Console.WriteLine("You have successfully beaten the {0}", drag.getName());
+                            genMonster = 0;
+                            break;
+                        }
+                        else if (war.GetHealth() == 0)
+                        {
+                            Console.WriteLine("You have died.");
+                            AskToPlayAgain();
+                        }
+                    }
+                }
             }
 
-            //Assign objects where necessary
+            //TODO Assign objects where necessary
 
-            //Generate items around the area
-            //Fixed areas
-            //Can only hold a certain amount of items (Inventory)
+            //TODO Generate items around the area
 
             //Allow the use of objects where necessary
             //Give items certain boosts
             //Can drop item if necessary
 
-            //Allow the user to make decision as to where they go
-            //Forward, Back, Left, Right
-
-            //Generate enemies
             //Generate attack and defense of enemies
             //Compare enemies stats to user
             //Depending on stats, depends on damage
