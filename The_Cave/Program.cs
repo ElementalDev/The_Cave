@@ -50,82 +50,6 @@ namespace The_Cave
             Console.ReadLine();
         }
 
-        //Ask the user what profession they want to use.
-
-        public static object GetProfession()
-        {
-            Console.Clear();
-
-            //Objects for stats
-
-            Warrior war = new Warrior();
-            Mage mage = new Mage();
-            Hunter hun = new Hunter();
-
-            //Input and validation variables
-
-            object chosenProf;
-
-            string input = "";
-            bool isValid = false;
-
-            do
-            {
-                //Profession menu
-
-                Console.WriteLine("------------------------------------------");
-                Console.WriteLine("| Which profession would you like to be? |");
-                Console.WriteLine("|          (Type your selection)         |");
-                Console.WriteLine("|                                        |");
-                Console.WriteLine("| - Warrior - HP= {0}, MP= {1}              |", war.GetHealth(), war.GetMag());
-                Console.WriteLine("| - Mage - HP= {0}, MP= {1}                |", mage.GetHealth(), mage.GetMag());
-                Console.WriteLine("| - Hunter - HP= {0}, MP= {1}              |", hun.GetHealth(), hun.GetMag());
-                Console.WriteLine("------------------------------------------");
-                input = Console.ReadLine();
-
-                input = input.ToLower();
-
-                //Returns profession based on user input
-
-                if (input[0] == 'w')
-                {
-                    chosenProf = new Warrior();
-                    return chosenProf;
-                }
-                else if (input[0] == 'm')
-                {
-                    chosenProf = new Mage();
-                    return chosenProf;
-                }
-                else if (input[0] == 'h')
-                {
-                    chosenProf = new Hunter();
-                    return chosenProf;
-                }
-                else
-                {
-                    Console.WriteLine("This input is invalid, please try again!");
-                    return 0;
-                }
-            } while (!isValid);
-        }
-
-        //Asks user the difficulty level they wish to play.
-        public static char GetDifficulty()
-        {
-            Console.Clear();
-
-            string diff = "";
-
-            Console.WriteLine("What difficulty would you like to play? (Easy, Medium, Hard)");
-            diff = Console.ReadLine();
-
-            diff = diff.ToLower();
-
-            //Return the first character of the user input
-            return diff[0];
-        }
-
         //Code that runs through the game.
         public static void PlayGame()
         {
@@ -134,18 +58,32 @@ namespace The_Cave
             Random rand = new Random(DateTime.Now.Millisecond);
             TheCave game = new TheCave();
 
-            //Get User Profession
+            //Stores weapons, armours and enemies to be used throughout the game
 
-            Type userProf = GetProfession();
+            Weapons[] wepArr = new Weapons[10];
+            Armours[] armArr = new Armours[10];
+            Enemies[] enemArr = new Enemies[10];
+
+            //Get User Profession and put the stats into variables to be used later
+
+            Professions userProf = game.GetProfession();
+
+            wepArr[0] = new Dagger();
+            armArr[0] = new Leather();
 
             //Get the max amount of turns based on difficulty
 
-            int maxTurns = game.GetTurns(GetDifficulty());
+            int maxTurns = game.GetTurns(game.GetDifficulty());
 
             Console.Clear();
 
-            Console.WriteLine("You have {0} turns to escape! The cave might be merciful...then again...maybe not.", maxTurns);
-            Console.WriteLine("Press enter to continue. Good Luck!");
+            Console.WriteLine("------------------------------------------------------------------------------");
+            Console.WriteLine("|                       You have {0} turns to escape!                        |", maxTurns);
+            Console.WriteLine("|                    Press enter to continue. Good Luck!                     |");
+            Console.WriteLine("------------------------------------------------------------------------------");
+
+            Console.WriteLine();
+            Console.WriteLine();
             Console.ReadLine();
 
             Console.Clear();
@@ -158,7 +96,7 @@ namespace The_Cave
 
             int randomNum = rand.Next(1, 100);
             int genMonster = 0;
-            int genItem = 0;
+            //int genItem = 0;
             int fwd = 0;
             int right = 0;
 
@@ -168,6 +106,10 @@ namespace The_Cave
 
             for (int i = 0; i <= maxTurns; i++)
             {
+                int userHP = userProf.GetHealth();
+                int userAtk = wepArr[0].GetAtk();
+                int userDef = wepArr[0].GetDef() + armArr[0].GetDef();
+
                 //Asks the user the direction they want to go in
 
                 do
@@ -198,7 +140,6 @@ namespace The_Cave
                     case 'f':
 
                         Console.WriteLine("You moved forward!");
-                        Console.WriteLine(genMonster);
                         fwd++;
                         break;
 
@@ -235,19 +176,17 @@ namespace The_Cave
                         break;
                 }
 
-                object[] enemArr = new object[10];
+                //Creates an array of enemies that an RNG randomly chooses from
 
-                Dragon drag = new Dragon();
-                Warrior war = new Warrior();
+                enemArr[0] = new Dragon();
                 BattleAxe axe = new BattleAxe();
                 Steel stlArm = new Steel();
 
-                int enemAtk = drag.getAtk();
-                int enemDef = drag.getDef();
-                int enemHP = drag.getHP();
-                int userHP = userProf.;
-                int userAtk = axe.GetAtk();
-                int userDef = axe.GetDef() + stlArm.GetDef();
+                //Declares the chosen enemies battle stats
+
+                int enemAtk = enemArr[0].getAtk();
+                int enemDef = enemArr[0].getDef();
+                int enemHP = enemArr[0].getHP();
 
                 //Generate enemies
 
@@ -255,7 +194,7 @@ namespace The_Cave
 
                 if (genMonster >= 100)
                 {
-                    Console.WriteLine("You have to battle {0}", drag.getName());
+                    Console.WriteLine("You have to battle {0}", enemArr[0].getName());
 
                     for (int j = 0; j < 999; i++)
                     {
@@ -264,24 +203,25 @@ namespace The_Cave
                         Console.WriteLine("What would you like to do? (Attack, Defend, Use Item, Run Away)");
                         userInput = Console.ReadLine().ToLower();
 
-                        (int, int) battle = game.UserTurn(enemAtk, enemDef, enemHP, userAtk, userDef, userHP, userInput[0]);
+                        int userStatus = game.UserTurn(enemAtk, enemDef, enemHP, userAtk, userDef, userHP, userInput[0]);
+                        int enemStatus = game.EnemTurn(enemAtk, enemDef, enemHP, userAtk, userDef, userHP);
 
-                        userHP = battle.Item1;
-                        enemHP = battle.Item2; 
+                        userHP = userStatus;
+                        enemHP = enemStatus; 
 
-                        if (battle.Item1 == -1 && battle.Item2 == -1)
+                        if (userStatus == -1)
                         {
                             genMonster = 0;
                             break;
                         }
 
-                        if (drag.getHP() <= 0)
+                        if (enemHP <= 0)
                         {
-                            Console.WriteLine("You have successfully beaten the {0}", drag.getName());
+                            Console.WriteLine("You have successfully beaten the {0}", enemArr[0].getName());
                             genMonster = 0;
                             break;
                         }
-                        else if (war.GetHealth() == 0)
+                        else if (userHP <= 0)
                         {
                             Console.WriteLine("You have died.");
                             AskToPlayAgain();
