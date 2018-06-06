@@ -1,5 +1,4 @@
 ﻿using System;
-using System.ComponentModel;
 
 namespace The_Cave
 {
@@ -13,7 +12,6 @@ namespace The_Cave
                 Console.Clear();
                 PrintIntro();
                 PlayGame();
-                PrintSummary("Ending1");
 
             } while (AskToPlayAgain());
 
@@ -223,8 +221,7 @@ namespace The_Cave
                         }
                         else if (userHP <= 0)
                         {
-                            Console.WriteLine("You have died.");
-                            AskToPlayAgain();
+                            PrintSummary("dead");
                         }
                     }
                 }
@@ -235,18 +232,18 @@ namespace The_Cave
             //TODO Generate items around the area
 
             //Allow the use of objects where necessary
-            //Give items certain boosts
-            //Can drop item if necessary
+                //Give items certain boosts
+                //Can drop item if necessary
 
             //Generate attack and defense of enemies
-            //Compare enemies stats to user
-            //Depending on stats, depends on damage
-            //DEF ATK HP
+                //Compare enemies stats to user
+                //Depending on stats, depends on damage
+                //DEF ATK HP
 
-            //Have an end goal
-            //Collected the right amount of quest items?
-            //Make it out of the cave?
-            //Kill a certain amount of enemies?
+            //TODO Have an end goal
+                //Collected the right amount of quest items?
+                //Make it out of the cave?
+                //Kill a certain amount of enemies?
 
             //FUTURE REF: Perhaps have different quests that the user can choose from for replayability
             //FUTURE REF: Generate items in random places
@@ -257,12 +254,18 @@ namespace The_Cave
         //Prints summary of the game.
         public static void PrintSummary(string ending)
         {
-            //Base summary on choices within the game
-            //2 Good endings
-            //2 Bad endings
-
-            //Show score
-
+            if (ending == "esc")
+            {
+                Console.WriteLine("Congratulations! You made it out of the cave and you found all the items!");
+            }
+            else if (ending == "esc<100")
+            {
+                Console.WriteLine("Congratulations! You made it out but you didn't find everything. Try again!");
+            }
+            else if (ending == "dead")
+            {
+                Console.WriteLine("You have died.");
+            }
         }
 
         //Asks the user to play again.
