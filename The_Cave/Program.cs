@@ -35,16 +35,16 @@ namespace The_Cave
             //Explain rules and mechanics to user
 
             Console.WriteLine();
-            Console.WriteLine("------------------------------------------------------------------------------");
-            Console.WriteLine("| -This is a game of adventure!                                              |");
-            Console.WriteLine("| -Choose your profession! Each one gives you different abilities and stats  |");
-            Console.WriteLine("| -Find your way out of the cave.                                            |");
-            Console.WriteLine("| -Use items to help you defeat the enemies that stand in your way           |");
-            Console.WriteLine("| -Find treasures that you can take back to the surface!                     |");
-            Console.WriteLine("| -Use words to navigate. Type help for the keywords!                        |");
-            Console.WriteLine("|                                                                            |");
-            Console.WriteLine("|                           Press enter to begin!                            |");
-            Console.WriteLine("------------------------------------------------------------------------------");
+            Console.WriteLine("-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-");
+            Console.WriteLine("| -This is a game of adventure!                                              #");
+            Console.WriteLine("# -Choose your profession! Each one gives you different abilities and stats  |");
+            Console.WriteLine("| -Find your way out of the cave.                                            #");
+            Console.WriteLine("# -Use items to help you defeat the enemies that stand in your way           |");
+            Console.WriteLine("| -Find treasures that you can take back to the surface!                     #");
+            Console.WriteLine("# -Use words to navigate. Type help for the keywords!                        |");
+            Console.WriteLine("|                                                                            #");
+            Console.WriteLine("#                           Press enter to begin!                            |");
+            Console.WriteLine("-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-");
             Console.ReadLine();
         }
 
@@ -56,18 +56,13 @@ namespace The_Cave
             Random rand = new Random(DateTime.Now.Millisecond);
             TheCave game = new TheCave();
 
-            //Stores weapons, armours and enemies to be used throughout the game
-
-            Weapons[] wepArr = new Weapons[10];
-            Armours[] armArr = new Armours[10];
-            Enemies[] enemArr = new Enemies[10];
+            Enemies[] enemArr = game.InitEnemies();
+            Enemies[] wepArr = game.InitEnemies();
+            Enemies[] armArr = game.InitEnemies();
 
             //Get User Profession and put the stats into variables to be used later
 
             Professions userProf = game.GetProfession();
-
-            wepArr[0] = new Dagger();
-            armArr[0] = new Leather();
 
             //Get the max amount of turns based on difficulty
 
@@ -75,13 +70,10 @@ namespace The_Cave
 
             Console.Clear();
 
-            Console.WriteLine("------------------------------------------------------------------------------");
+            Console.WriteLine("-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-");
             Console.WriteLine("|                       You have {0} turns to escape!                        |", maxTurns);
             Console.WriteLine("|                    Press enter to continue. Good Luck!                     |");
-            Console.WriteLine("------------------------------------------------------------------------------");
-
-            Console.WriteLine();
-            Console.WriteLine();
+            Console.WriteLine("-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-");
             Console.ReadLine();
 
             Console.Clear();
@@ -94,7 +86,7 @@ namespace The_Cave
 
             int randomNum = rand.Next(1, 100);
             int genMonster = 0;
-            //int genItem = 0;
+            int genItem = 0;
             int fwd = 0;
             int right = 0;
 
@@ -105,8 +97,8 @@ namespace The_Cave
             for (int i = 0; i <= maxTurns; i++)
             {
                 int userHP = userProf.GetHealth();
-                int userAtk = wepArr[0].GetAtk();
-                int userDef = wepArr[0].GetDef() + armArr[0].GetDef();
+                int userAtk = wepArr[0].getAtk();
+                int userDef = wepArr[0].getDef() + armArr[0].getDef();
 
                 //Asks the user the direction they want to go in
 

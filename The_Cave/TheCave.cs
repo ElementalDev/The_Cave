@@ -2,20 +2,53 @@
 
 class TheCave
 {
-    private static int maxTurns = 0;
+    private static int maxTurns;
 
     //Constructor
 
     public TheCave()
     {
-        Reset();
+        maxTurns = 0;
     }
 
-    public void Reset()
+    public Enemies[] InitEnemies()
     {
-        Weapons wep = new Weapons();
-        Armours arm = new Armours();
-        Professions prof = new Professions();
+        Enemies[] enemArr = new Enemies[6];
+
+        enemArr[0] = new Goblin();
+        enemArr[1] = new Giant_Bat();
+        enemArr[2] = new Giant();
+        enemArr[3] = new Wraith();
+        enemArr[4] = new Skeleton();
+        enemArr[5] = new Dragon();
+
+        return enemArr;
+    }
+
+    public Weapons[] InitWeapons()
+    {
+        Weapons[] wepArr = new Weapons[6];
+
+        wepArr[0] = new Dagger();
+        wepArr[1] = new CrossBow();
+        wepArr[2] = new Mace();
+        wepArr[3] = new MorningStar();
+        wepArr[4] = new Longsword();
+        wepArr[5] = new BattleAxe();
+
+        return wepArr;
+    }
+
+    public Armours[] InitArmours()
+    {
+        Armours[] armArr = new Armours[4];
+
+        armArr[0] = new Wool();
+        armArr[1] = new Leather();
+        armArr[2] = new Steel();
+        armArr[3] = new Chainmail();
+
+        return armArr;
     }
 
     //Asks user the difficulty level they wish to play.
