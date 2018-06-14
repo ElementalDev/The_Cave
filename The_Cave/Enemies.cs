@@ -4,15 +4,15 @@ class Enemies
     protected int healthPoints = 0, atkPoints = 0, defPoints = 0, magicPoints = 0;
     protected string enemName = "";
 
-    public int getHP() { return healthPoints; }
+    public int GetHP() { return healthPoints; }
 
-    public int getAtk() { return atkPoints; }
+    public int GetAtk() { return atkPoints; }
 
-    public int getDef() { return defPoints; }
+    public int GetDef() { return defPoints; }
 
-    public int getMP() { return magicPoints; }
+    public int GetMP() { return magicPoints; }
 
-    public string getName() { return enemName; }
+    public string GetName() { return enemName; }
 }
 
 //Types of enemies

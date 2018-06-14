@@ -56,9 +56,11 @@ namespace The_Cave
             Random rand = new Random(DateTime.Now.Millisecond);
             TheCave game = new TheCave();
 
+            //Creates arrays that an RNG randomly chooses from
+
             Enemies[] enemArr = game.InitEnemies();
-            Enemies[] wepArr = game.InitEnemies();
-            Enemies[] armArr = game.InitEnemies();
+            Weapons[] wepArr = game.InitWeapons();
+            Armours[] armArr = game.InitArmours();
 
             //Get User Profession and put the stats into variables to be used later
 
@@ -72,6 +74,8 @@ namespace The_Cave
 
             Console.WriteLine("-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-");
             Console.WriteLine("|                       You have {0} turns to escape!                        |", maxTurns);
+            Console.WriteLine("|            You start with a Dagger that has {0} atk and {1} def            |", wepArr[0].GetAtk(), wepArr[0].GetDef());
+            Console.WriteLine("|                You start with Wool Armour that has {0} def                 |", armArr[0].GetDef());
             Console.WriteLine("|                    Press enter to continue. Good Luck!                     |");
             Console.WriteLine("-*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*--*-");
             Console.ReadLine();
@@ -82,11 +86,11 @@ namespace The_Cave
 
             // Can only hold a certain amount of items(Inventory)
 
-            object[] inventory = new object[10]; 
+            Object[] inventory = new Object[10]; 
 
-            int randomNum = rand.Next(1, 100);
+            int randomNum = rand.Next(1, 30);
             int genMonster = 0;
-            int genItem = 0;
+            //int genItem = 0;
             int fwd = 0;
             int right = 0;
 
@@ -97,8 +101,8 @@ namespace The_Cave
             for (int i = 0; i <= maxTurns; i++)
             {
                 int userHP = userProf.GetHealth();
-                int userAtk = wepArr[0].getAtk();
-                int userDef = wepArr[0].getDef() + armArr[0].getDef();
+                int userAtk = wepArr[0].GetAtk();
+                int userDef = wepArr[0].GetDef() + armArr[0].GetDef();
 
                 //Asks the user the direction they want to go in
 
@@ -166,25 +170,27 @@ namespace The_Cave
                         break;
                 }
 
-                //Creates an array of enemies that an RNG randomly chooses from
-
-                enemArr[0] = new Dragon();
-                BattleAxe axe = new BattleAxe();
-                Steel stlArm = new Steel();
-
-                //Declares the chosen enemies battle stats
-
-                int enemAtk = enemArr[0].getAtk();
-                int enemDef = enemArr[0].getDef();
-                int enemHP = enemArr[0].getHP();
-
-                //Generate enemies
+            
 
                 genMonster += randomNum;
 
                 if (genMonster >= 100)
                 {
-                    Console.WriteLine("You have to battle {0}", enemArr[0].getName());
+                    int randNum = rand.Next(0, 5);
+
+                   
+                    //Generate enemies
+                    Enemies enem = enemArr[randNum];
+
+                    //Declares the chosen enemies battle stats
+
+                    int enemAtk = enem.GetAtk();
+                    int enemDef = enem.GetDef();
+                    int enemHP = enem.GetHP();
+                    int enemMP = enem.GetMP();
+                    string enemName = enem.GetName();
+
+                    Console.WriteLine("You have to battle {0}", enemName);
 
                     for (int j = 0; j < 999; i++)
                     {
@@ -204,10 +210,10 @@ namespace The_Cave
                             genMonster = 0;
                             break;
                         }
-
+              
                         if (enemHP <= 0)
                         {
-                            Console.WriteLine("You have successfully beaten the {0}", enemArr[0].getName());
+                            Console.WriteLine("You have successfully beaten the {0}", enemArr[0].GetName());
                             genMonster = 0;
                             break;
                         }

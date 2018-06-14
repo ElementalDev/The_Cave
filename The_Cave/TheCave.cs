@@ -111,14 +111,14 @@ class TheCave
         {
             //Profession menu
 
-            Console.WriteLine("------------------------------------------");
-            Console.WriteLine("| Which profession would you like to be? |");
-            Console.WriteLine("|          (Type your selection)         |");
-            Console.WriteLine("|                                        |");
-            Console.WriteLine("| - Warrior - HP= {0}, MP= {1}              |", war.GetHealth(), war.GetMag());
-            Console.WriteLine("| - Mage - HP= {0}, MP= {1}                |", mage.GetHealth(), mage.GetMag());
-            Console.WriteLine("| - Hunter - HP= {0}, MP= {1}              |", hun.GetHealth(), hun.GetMag());
-            Console.WriteLine("------------------------------------------");
+            Console.WriteLine("-----------------------------------------");
+            Console.WriteLine("|Which profession would you like to be?|");
+            Console.WriteLine("|          (Type your selection)       |");
+            Console.WriteLine("|                                      |");
+            Console.WriteLine("|     - Warrior - HP= {0}, MP= {1}     |", war.GetHealth(), war.GetMag());
+            Console.WriteLine("|     - Mage - HP= {0}, MP= {1}        |", mage.GetHealth(), mage.GetMag());
+            Console.WriteLine("|     - Hunter -  HP= {0}, MP= {1}     |", hun.GetHealth(), hun.GetMag());
+            Console.WriteLine("----------------------------------------");
             input = Console.ReadLine();
 
             input = input.ToLower();
@@ -181,7 +181,24 @@ class TheCave
 
             case 'u':
 
-                UseItem();
+                string itemUsed = UseItem(userAtk, userDef, userHP);
+
+                if(itemUsed == "lh" || itemUsed == "h")
+                {
+                    Console.WriteLine("Your new health is: {0}", userHP);
+                }
+                else if (itemUsed == "a")
+                {
+                    Console.WriteLine("Your new atk is: {0}", userAtk);
+                }
+                else if (itemUsed == "d")
+                {
+                    Console.WriteLine("Your new def is: {0}", userDef);
+                }
+                else
+                {
+                    break;
+                }
                 break;
 
             case 'r':
@@ -214,9 +231,41 @@ class TheCave
 
     }
 
-    public void UseItem()
+    public string UseItem(int userAtk, int userDef, int userHP)
     {
+        string itemSelection = String.Empty;
 
+        Console.WriteLine("Which item would you like to use?");
+        itemSelection = Console.ReadLine();
+
+        itemSelection = itemSelection.ToLower();
+
+        if (itemSelection[0] == 'l' && itemSelection[1] == 'h')
+        {
+            userHP += 50;
+
+            return "lh";
+        }
+        else if (itemSelection[0] == 'h')
+        {
+            userHP += 15;
+            return "h";
+        }
+        else if (itemSelection[0] == 'a')
+        {
+            userAtk += 5;
+            return "a";
+        }
+        else if (itemSelection[0] == 'd')
+        {
+            userDef += 5;
+            return "d";
+        }
+        else
+        {
+            Console.WriteLine("This item does not exist");
+            return "0";
+        }
     }
 }
 
